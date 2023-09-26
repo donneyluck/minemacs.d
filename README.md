@@ -1,0 +1,2 @@
+# minemacs.d
+minemacs config
