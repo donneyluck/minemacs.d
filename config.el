@@ -12,7 +12,8 @@
 (setq
  ;; Set a theme for MinEmacs, supported themes include these from `doom-themes'
  ;; or built-in themes
- minemacs-theme 'doom-one ; `doom-one' is a dark theme, `doom-one-light' is the light one
+ ;; minemacs-theme 'doom-one ; `doom-one' is a dark theme, `doom-one-light' is the light one
+ minemacs-theme 'doom-monokai-classic
  ;; Set Emacs fonts, some good choices include:
  ;; - Cascadia Code
  ;; - Fira Code, FiraCode Nerd Font
@@ -21,7 +22,7 @@
  ;; - JetBrains Mono
  minemacs-fonts
  '(:font-family "Courier New"
- ;; '(:font-family "Iosevka Fixed Curly Slab"
+ ;;'(:font-family "Iosevka Fixed Curly Slab"
  ;;'(:font-family "JetBrains Mono"
    :font-size 15
    :variable-pitch-font-family "IBM Plex Serif"
@@ -216,3 +217,50 @@
       (message "Template %s not found" (cadr elt))
       nil)))
 (add-to-list 'tempel-user-elements #'tempel-include)
+
+(use-package string-inflection
+  :straight t
+  :commands (string-inflection-all-cycle
+             string-inflection-toggle
+             string-inflection-camelcase
+             string-inflection-lower-camelcase
+             string-inflection-kebab-case
+             string-inflection-underscore
+             string-inflection-capital-underscore
+             string-inflection-upcase)
+  :init
+  (+map!
+        "c~~" '(string-inflection-all-cycle :wk "cycle")
+        "c~t" '( string-inflection-toggle :wk "toggle")
+        "c~c" 'string-inflection-camelcase
+        "c~d" #'string-inflection-lower-camelcase
+        "c~k" #'string-inflection-kebab-case
+        "c~_" #'string-inflection-underscore
+        "c~u" #'string-inflection-capital-underscore
+        "c~U" #'string-inflection-upcase)
+  (with-eval-after-load 'evil
+    (evil-define-operator evil-operator-string-inflection (beg end _type)
+      "Define a new evil operator that cycles symbol casing."
+      :move-point nil
+      (interactive "<R>")
+      (string-inflection-all-cycle)
+      (setq evil-repeat-info '([?g ?~])))
+    (+nmap! "g~" 'evil-operator-string-inflection)))
+
+(use-package screenshot
+  :straight (:type git :host github :repo "tecosaur/screenshot")
+  :config
+  (setq screenshot-line-numbers-p nil)
+  (setq screenshot-min-width 120)
+  (setq screenshot-max-width 300)
+  (setq screenshot-truncate-lines-p nil)
+  (setq screenshot-text-only-p nil)
+  (setq screenshot-font-size 10)
+  (setq screenshot-border-width 16)
+  (setq screenshot-upload-fn "upload %s 2>/dev/null")
+  ;;(setq screenshot-radius 0)
+  ;; (setq screenshot-shadow-radius 0)
+  ;; (setq screenshot-shadow-offset-horizontal 0)
+  ;; (setq screenshot-shadow-offset-vertical 0)
+  :hook
+  ((screenshot-buffer-creation . g-screenshot-on-buffer-creation)))
