@@ -152,6 +152,11 @@ c-mode :when (re-search-backward "^\\S-*$" (line-beginning-position) 'noerror)
 (inc "#include <" (p (concat (file-name-base (or (buffer-file-name) (buffer-name))) ".h")) ">")
 (incc "#include \"" (p (concat (file-name-base (or (buffer-file-name) (buffer-name))) ".h")) "\"")
 
+lua-mode
+(lv "local " (p "name") " = " (p "variable"))
+(for "for " (p "k, v") " in pairs(" (p "table") ") do" n> (p "body") n "end")
+(fori "for " (p "k, v") " in ipairs(" (p "table") ") do" n> (p "body") n "end")
+
 org-mode
 
 (caption "#+caption: ")
