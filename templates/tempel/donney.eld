@@ -33,6 +33,12 @@ prog-mode
              (make-string 70 (elt comment-start 0)) n
 )
 
+(make-desc (make-string 70 (elt comment-start 0)) n>
+           comment-start " " (p "description" desc) (make-string (- 64 (length desc)) ? )  (replace-regexp-in-string " " "" comment-start) n>
+           (make-string 70 (elt comment-start 0)) n
+)
+
+
 
 latex-mode
 

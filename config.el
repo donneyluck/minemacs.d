@@ -13,7 +13,8 @@
  ;; Set a theme for MinEmacs, supported themes include these from `doom-themes'
  ;; or built-in themes
  ;; minemacs-theme 'doom-one ; `doom-one' is a dark theme, `doom-one-light' is the light one
- minemacs-theme 'doom-monokai-classic
+ ;; minemacs-theme 'doom-monokai-classic
+ minemacs-theme 'doom-one
  ;; Set Emacs fonts, some good choices include:
  ;; - Cascadia Code
  ;; - Fira Code, FiraCode Nerd Font
@@ -21,12 +22,12 @@
  ;; - IBM Plex Mono
  ;; - JetBrains Mono
  minemacs-fonts
- '(:font-family "Courier New Bold"
- ;;'(:font-family "Iosevka Fixed Curly Slab"
+ ;;'(:font-family "Courier New Bold"
+ '(:font-family "Iosevka Fixed Curly Slab"
  ;;'(:font-family "JetBrains Mono"
-   :font-size 12
+   :font-size 16
    :variable-pitch-font-family "IBM Plex Serif"
-   :variable-pitch-font-size 12))
+   :variable-pitch-font-size 16))
 
 ;; When `me-daemon' and `me-email' are enabled, MinEmacs will try to start
 ;; `mu4e' in background at startup. To disable this behavior, you can set
