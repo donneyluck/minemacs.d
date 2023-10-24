@@ -39,18 +39,10 @@ prog-mode
 
 (make-desc (make-string 70 (elt comment-start 0)) n>
            comment-start " " (p "description" desc) (make-string (- 64 (length desc)) ? )  (replace-regexp-in-string " " "" comment-start) n>
-           (make-string 70 (elt comment-start 0)) n
-           )
+           (make-string 70 (elt comment-start 0)))
 
 
-lua-mode
 
-(make-function-desc (make-string 70 (elt comment-start 0)) n>
-                    comment-start " @see    " (p "function description" desc) (make-string (- 56 (length desc)) ? )  (replace-regexp-in-string " " "" comment-start) n>
-                    comment-start " @param  " (p "name" name) " " (p "type" type) " " (p "description" pdesc) (make-string (- 54 (+ (length name) (length type) (length pdesc))) ? ) (replace-regexp-in-string " " "" comment-start) n>
-                    comment-start " @return " (p "nil" ret) (make-string (- 56 (length ret)) ? )  (replace-regexp-in-string " " "" comment-start) n>
-                    (make-string 70 (elt comment-start 0)) n
-                    )
 
 latex-mode
 
@@ -171,10 +163,17 @@ c-mode :when (re-search-backward "^\\S-*$" (line-beginning-position) 'noerror)
 (incc "#include \"" (p (concat (file-name-base (or (buffer-file-name) (buffer-name))) ".h")) "\"")
 
 lua-mode
+
 (lv "local " (p "name") " = " (p "variable"))
 (for "for " (p "k, v") " in pairs(" (p "table") ") do" n> (p "body") n "end")
 (fori "for " (p "i, v") " in ipairs(" (p "table") ") do" n> (p "body") n "end")
 (fora "for i = 1, #" (p "array") " do" n> (p "body") n "end")
+
+(make-function-desc (make-string 70 (elt comment-start 0)) n>
+                    comment-start " @see    " (p "function description" desc) (make-string (- 56 (length desc)) ? )  (replace-regexp-in-string " " "" comment-start) n>
+                    comment-start " @param  " (p "name" name) " " (p "type" type) " " (p "description" pdesc) (make-string (- 54 (+ (length name) (length type) (length pdesc))) ? ) (replace-regexp-in-string " " "" comment-start) n>
+                    comment-start " @return " (p "nil" ret) (make-string (- 56 (length ret)) ? )  (replace-regexp-in-string " " "" comment-start) n>
+                    (make-string 70 (elt comment-start 0)))
 
 org-mode
 
