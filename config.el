@@ -22,12 +22,12 @@
  ;; - IBM Plex Mono
  ;; - JetBrains Mono
  minemacs-fonts
- ;;'(:font-family "Courier New Bold"
- '(:font-family "Iosevka Fixed Curly Slab"
+ '(:font-family "Courier New Bold"
+ ;;'(:font-family "Iosevka Fixed Curly Slab"
  ;;'(:font-family "JetBrains Mono"
-   :font-size 16
+   :font-size 12
    :variable-pitch-font-family "IBM Plex Serif"
-   :variable-pitch-font-size 16))
+   :variable-pitch-font-size 12))
 
 ;; When `me-daemon' and `me-email' are enabled, MinEmacs will try to start
 ;; `mu4e' in background at startup. To disable this behavior, you can set
