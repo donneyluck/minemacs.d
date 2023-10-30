@@ -34,7 +34,7 @@ prog-mode
              comment-start " Created:       "(format-time-string "%Y-%m-%d")"                                       " (replace-regexp-in-string " " "" comment-start) n
              comment-start " Description:   "(p "description" desc) (make-string (- 49 (length desc)) ? )  (replace-regexp-in-string " " "" comment-start) n
              comment-start " Copyright(C)   machine studio                                   " (replace-regexp-in-string " " "" comment-start) n
-             (make-string 70 (elt comment-start 0)) n
+             (make-string 70 (elt comment-start 0)) n>
              )
 
 (make-desc (make-string 70 (elt comment-start 0)) n>
@@ -168,12 +168,14 @@ lua-mode
 (for "for " (p "k, v") " in pairs(" (p "table") ") do" n> (p "body") n "end")
 (fori "for " (p "i, v") " in ipairs(" (p "table") ") do" n> (p "body") n "end")
 (fora "for i = 1, #" (p "array") " do" n> (p "body") n "end")
-
-(make-function-desc (make-string 70 (elt comment-start 0)) n>
-                    comment-start " @see    " (p "function description" desc) (make-string (- 56 (length desc)) ? )  (replace-regexp-in-string " " "" comment-start) n>
-                    comment-start " @param  " (p "name" name) " " (p "type" type) " " (p "description" pdesc) (make-string (- 54 (+ (length name) (length type) (length pdesc))) ? ) (replace-regexp-in-string " " "" comment-start) n>
-                    comment-start " @return " (p "nil" ret) (make-string (- 56 (length ret)) ? )  (replace-regexp-in-string " " "" comment-start) n>
-                    (make-string 70 (elt comment-start 0)))
+(see "---@see " (p "function_desc") q)
+(param "---@param "(p "name") " " (p "type") " " (p "desc"))
+(ret   "---@return " (p "type"))
+;; (make-function-desc (make-string 70 (elt comment-start 0)) n>
+;;                     comment-start " @see    " (p "function description" desc) (make-string (- 56 (length desc)) ? )  (replace-regexp-in-string " " "" comment-start) n>
+;;                     comment-start " @param  " (p "name" name) " " (p "type" type) " " (p "description" pdesc) (make-string (- 54 (+ (length name) (length type) (length pdesc))) ? ) (replace-regexp-in-string " " "" comment-start) n>
+;;                     comment-start " @return " (p "nil" ret) (make-string (- 56 (length ret)) ? )  (replace-regexp-in-string " " "" comment-start) n>
+;;                     (make-string 70 (elt comment-start 0)))
 
 org-mode
 

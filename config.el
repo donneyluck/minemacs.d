@@ -1,10 +1,10 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022 Abdelhak Bougouffa
+;; Copyright (C) 2022-2023 Abdelhak Bougouffa
 
 ;; Personal info
-(setq user-full-name "donney.luck"
-      user-mail-address "donney.luck@gmail.com")
+(setq user-full-name "Abdelhak Bougouffa"
+      user-mail-address (concat "abougouffa" "@" "fedora" "project" "." "org"))
 
 ;; Set the default GPG key ID, see "gpg --list-secret-keys"
 ;; (setq-default epa-file-encrypt-to '("XXXX"))
@@ -12,22 +12,33 @@
 (setq
  ;; Set a theme for MinEmacs, supported themes include these from `doom-themes'
  ;; or built-in themes
- ;; minemacs-theme 'doom-one ; `doom-one' is a dark theme, `doom-one-light' is the light one
- ;; minemacs-theme 'doom-monokai-classic
- minemacs-theme 'doom-one
- ;; Set Emacs fonts, some good choices include:
- ;; - Cascadia Code
- ;; - Fira Code, FiraCode Nerd Font
- ;; - Iosevka, Iosevka Fixed Curly Slab
- ;; - IBM Plex Mono
- ;; - JetBrains Mono
- minemacs-fonts
- '(:font-family "Courier New Bold"
- ;;'(:font-family "Iosevka Fixed Curly Slab"
- ;;'(:font-family "JetBrains Mono"
-   :font-size 12
-   :variable-pitch-font-family "IBM Plex Serif"
-   :variable-pitch-font-size 12))
+ minemacs-theme 'doom-shades-of-purple) ; `doom-one' is a dark theme, `doom-one-light' is the light one
+
+;; MinEmacs defines the variable `minemacs-fonts-plist' that is used by the
+;; `+setup-fonts' function. The function checks and enables the first available
+;; font from these defined in `minemacs-fonts-plist'. This variable can be
+;; customized to enable some language-specific fonts.
+
+;; You can set a list of fonts to be used, like the snippet below. The first
+;; font found in the list will be used:
+(plist-put minemacs-fonts-plist
+           :default
+           '((:family "Courier New" :height 110 :weight bold)
+             (:family "Iosevka Fixed Curly Slab" :height 130)
+             (:family "JetBrains Mono" :height 110)
+             (:family "Cascadia Code" :height 130)))
+
+;; Use "Amiri" or "KacstOne" for Arabic script (the first to be found)
+(plist-put minemacs-fonts-plist
+           :arabic
+           '((:family "Amiri" :scale 0.9)
+             (:family "KacstOne")))
+
+;; Use "LXGW WenKai Mono" for Han (Chinese) script
+(plist-put minemacs-fonts-plist
+           :han
+           '((:family "LXGW WenKai Mono")))
+           ;; '((:family "LXGW WenKai Mono" :scale 1.3)))
 
 ;; When `me-daemon' and `me-email' are enabled, MinEmacs will try to start
 ;; `mu4e' in background at startup. To disable this behavior, you can set
@@ -77,11 +88,18 @@
   :custom
   (devdocs-data-dir (concat minemacs-local-dir "devdocs/")))
 
+;; Module: `me-tools' -- Package: `vterm'
+;; When the libvterm present in the system is too old, you can face VTERM_COLOR
+;; related compilation errors. Thil parameter tells `vterm' to download libvterm
+;; for you, see the FAQ at: github.com/akermu/emacs-libvterm.
+;; (with-eval-after-load 'vterm
+;;   (setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=Off"))
+
 ;; Module: `me-natural-langs' -- Package: `spell-fu'
 (with-eval-after-load 'spell-fu
   ;; We can use MinEmacs' helper macro `+spell-fu-register-dictionaries!'
   ;; to enable multi-language spell checking.
-  (+spell-fu-register-dictionaries! "en" "cn"))
+  (+spell-fu-register-dictionaries! "en" "fr"))
 
 ;; Module: `me-rss' -- Package: `elfeed'
 (with-eval-after-load 'elfeed
@@ -133,7 +151,7 @@
 ;; Module: `me-org' -- Package: `org'
 (with-eval-after-load 'org
   ;; Set Org-mode directory
-  (setq org-directory "~/work/org/" ; let's put files here
+  (setq org-directory "~/Org/" ; let's put files here
         org-default-notes-file (concat org-directory "inbox.org"))
   ;; Customize Org stuff
   ;; (setq org-todo-keywords
@@ -154,7 +172,7 @@
 ;; Module: `me-notes' -- Package: `org-roam'
 ;; For better integration with other packages (like `citar-org-roam'), it is
 ;; recommended to set the `org-roam-directory' before loading the package.
-(setq org-roam-directory "~/work/org/slip-box/")
+(setq org-roam-directory "~/Org/slip-box/")
 
 (with-eval-after-load 'org-roam
   (setq org-roam-db-location (concat org-roam-directory "org-roam.db"))
@@ -199,6 +217,37 @@
           :tramp-prefix "/docker:ros@ros-machine:"
           :workspace "~/ros2_ws"
           :extends '("/opt/ros/foxy/")))))
+
+;; Module: `me-vc' -- Package: `forge'
+(with-eval-after-load 'forge
+  ;; To setup private Gitlab instance
+  ;; 1. Add this to your ~/.gitconfig
+  ;; [gitlab "gitlab.private.com/api/v4"]
+  ;;   user = my.username
+  ;; 2. Then create an access token on GitLab. I ticked api and write_repository, which seems to work fine so far. Put the token in ~/.authinfo.gpg
+  ;; machine gitlab.private.com/api/v4 login my.user^forge password <token>
+  ;; 3. Use this in your config:
+  (add-to-list 'forge-alist '("gitlab.private.com" "gitlab.private.com/api/v4" "gitlab.private.com" forge-gitlab-repository)))
+
+;; Module: `me-vc' -- Package: `jiralib2'
+;; When `jiralib2' is enabled, do some extra stuff
+(when (memq 'jiralib2 minemacs-configured-packages)
+  ;; You need to set `jiralib2-url' and `jiralib2-user-login-name'
+  (setq jiralib2-url "https://my-jira-server.tld/"
+        jiralib2-user-login-name "my-username")
+
+  ;; Add a hook on git-commit, so it adds the ticket number to the commit message
+  (add-hook
+   'git-commit-mode-hook
+   (defun +jira-commit-auto-insert-ticket-id-h ()
+     (when (and jiralib2-user-login-name
+                ;; Do not auto insert if the commit message is not empty (ex. amend)
+                (+first-line-empty-p))
+       (goto-char (point-min))
+       (insert "\n")
+       (goto-char (point-min))
+       (+jira-insert-ticket-id)
+       (insert ": ")))))
 
 (use-package evil-surround
   :straight t
