@@ -314,3 +314,9 @@
   ;; (setq screenshot-shadow-offset-vertical 0)
   :hook
   ((screenshot-buffer-creation . g-screenshot-on-buffer-creation)))
+
+(with-eval-after-load 'denote
+  (setq denote-known-keywords '("emacs" "skynet" "program" "life")))
+
+(with-eval-after-load 'lua-mode
+  (setq lua-indent-level 4))
