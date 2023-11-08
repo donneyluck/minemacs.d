@@ -3,8 +3,8 @@
 ;; Copyright (C) 2022-2023 Abdelhak Bougouffa
 
 ;; Personal info
-(setq user-full-name "Abdelhak Bougouffa"
-      user-mail-address (concat "abougouffa" "@" "fedora" "project" "." "org"))
+(setq user-full-name "donneyluck"
+      user-mail-address "donney.luck@gmail.com")
 
 ;; Set the default GPG key ID, see "gpg --list-secret-keys"
 ;; (setq-default epa-file-encrypt-to '("XXXX"))
@@ -320,3 +320,6 @@
 
 (with-eval-after-load 'lua-mode
   (setq lua-indent-level 4))
+
+(use-package 0x0
+  :straight (:type git :host sourcehut :repo "willvaughn/emacs-0x0"))
