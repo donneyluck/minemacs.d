@@ -323,3 +323,8 @@
 
 (use-package 0x0
   :straight (:type git :host sourcehut :repo "willvaughn/emacs-0x0"))
+
+(use-package sproto-mode
+  :straight (:type git :host github :repo "m2q1n9/sproto-mode")
+  :config
+  (add-to-list 'auto-mode-alist '("\\.sproto\\'" . sproto-mode)))
