@@ -7,16 +7,16 @@
 
 ;;; Ordered list of enabled core modules
 (setq minemacs-core-modules
-      '(me-splash        ; Simple splash screen
-        me-keybindings   ; Keybinding (general, which-key, hydra, ...)
-        me-evil          ; Emacs as Vim (evil, evil-collection, evil-escape, evil-snipe, evil-numbers, ...)
-        me-core-ui       ; Core UI (doom-themes, modus-themes, doom-modeline, ...)
-        me-completion))  ; Completion (vertico, marginalia, corfu, cape, consult, embark, ...)
+      '(me-splash         ; Simple splash screen
+        me-keybindings    ; Keybinding (general, which-key, hydra, ...)
+        me-evil           ; Emacs as Vim (evil, evil-collection, evil-snipe, evil-numbers, ...)
+        me-core-ui        ; Core UI (doom-themes, modus-themes, doom-modeline, ...)
+        me-completion))   ; Completion (vertico, marginalia, corfu, cape, consult, embark, ...)
 
 ;;; List of enabled modules
 (setq minemacs-modules
       '(me-ui             ; User interface (svg-lib, focus, mixed-pitch, ...)
-        me-editor         ; Editing (tempel, smartparens, ligature, ...)
+        me-editor         ; Editing (tempel, tempel-collection, rainbow-delimiters, expreg, drag-stuff, ...)
         me-daemon         ; Emacs daemon tweaks
         me-undo           ; Better undoing (undo-fu, undo-fu-session, vundo, ...)
         me-multi-cursors  ; Multi-cursors editing (iedit, evil-mc, evil-iedit-state, ...)
@@ -53,7 +53,7 @@
         me-media          ; Multimedia (empv, emms, ...)
         ;; me-workspaces  ; Workspace separation (tabspaces, ...)
         me-binary         ; Display binary files in hex or decompile them
-        me-window))       ; Frame & window tweaks
+        me-window       ; Frame & window tweaks
 
 ;;; List of disabled packages
 ;; You can set `minemacs-disabled-packages' to disable some packages. For
@@ -81,7 +81,13 @@
 ;;        minemacs-modules
 ;;        '(obsolete/me-cov           ; Show code coverage results (cov, ...)
 ;;          obsolete/me-eaf           ; EAF apps (browser, jupyter, file-sender, ...)
+          obsolete/me-evil-escape))   ; Escape without ESC (evil-escape, ...)
+;;          obsolete/me-ts-fold       ; Code folding with tree-sitter
 ;;          obsolete/me-flycheck      ; Static checkers (flycheck, ...)
+;;          obsolete/me-lexic         ; Offline dictionary using sdcv
+;;          obsolete/me-ligature      ; Ligatures (needs further customization in function of the used font)
+;;          obsolete/me-smartparens   ; Smartparens
+;;          obsolete/me-maxima        ; Maxima CAS (maxima, imaxima)
 ;;          obsolete/me-org-roam      ; Org roam configuration (org-roam, consult-org-roam, ...)
 ;;          obsolete/me-projectile    ; Project management (projectile, consult-projectile, treemacs-projectile, ...)
 ;;          obsolete/me-tree-sitter   ; Tree-sitter module configuration (this module is automatically activated for Emacs 28 or 29+ built without treesitter support)

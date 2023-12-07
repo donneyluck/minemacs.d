@@ -169,21 +169,9 @@
            "agenda.org"
            "projects.org"))))
 
-;; Module: `me-notes' -- Package: `org-roam'
-;; For better integration with other packages (like `citar-org-roam'), it is
-;; recommended to set the `org-roam-directory' before loading the package.
-(setq org-roam-directory "~/Org/slip-box/")
-
-(with-eval-after-load 'org-roam
-  (setq org-roam-db-location (concat org-roam-directory "org-roam.db"))
-
-  ;; Register capture template (via Org-Protocol)
-  ;; Add this as bookmarklet in your browser
-  ;; javascript:location.href='org-protocol://roam-ref?template=r&ref=%27+encodeURIComponent(location.href)+%27&title=%27+encodeURIComponent(document.title)+%27&body=%27+encodeURIComponent(window.getSelection())
-  (setq org-roam-capture-ref-templates
-        '(("r" "ref" plain "%?"
-           :if-new (file+head "web/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+created: %U\n\n${body}\n")
-           :unnarrowed t))))
+;; Module: `me-notes' -- Package: `denote'
+(with-eval-after-load 'denote
+  (setq denote-directory "~/Org/notes/"))
 
 ;; Module: `me-media' -- Package: `empv'
 (with-eval-after-load 'empv
@@ -260,13 +248,13 @@
 ;;   :demand t
 ;;   :mode ("\\.proto\\'" . protobuf-ts-mode))
 
-(defun tempel-include (elt)
-  (when (eq (car-safe elt) 'i)
-    (if-let (template (alist-get (cadr elt) (tempel--templates)))
-        (cons 'l template)
-      (message "Template %s not found" (cadr elt))
-      nil)))
-(add-to-list 'tempel-user-elements #'tempel-include)
+;; (defun tempel-include (elt)
+;;   (when (eq (car-safe elt) 'i)
+;;     (if-let (template (alist-get (cadr elt) (tempel--templates)))
+;;         (cons 'l template)
+;;       (message "Template %s not found" (cadr elt))
+;;       nil)))
+;; (add-to-list 'tempel-user-elements #'tempel-include)
 
 (use-package string-inflection
   :straight t
@@ -319,6 +307,7 @@
   (setq denote-known-keywords '("emacs" "skynet" "program" "life")))
 
 (with-eval-after-load 'lua-mode
+  (+eglot-register 'lua-mode '("lua-language-server"))
   (setq lua-indent-level 4))
 
 (use-package 0x0
@@ -326,5 +315,12 @@
 
 (use-package sproto-mode
   :straight (:type git :host github :repo "m2q1n9/sproto-mode")
+  :mode ("\\.sproto\\'" . sproto-mode))
+
+(use-package auto-save
+  :straight (:type git :host github :repo "manateelazycat/auto-save")
+  :demand t
   :config
-  (add-to-list 'auto-mode-alist '("\\.sproto\\'" . sproto-mode)))
+  (auto-save-enable)
+  (setq auto-save-silent t)   ; quietly save
+  (setq auto-save-delete-trailing-whitespace t))
