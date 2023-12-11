@@ -317,10 +317,10 @@
   :straight (:type git :host github :repo "m2q1n9/sproto-mode")
   :mode ("\\.sproto\\'" . sproto-mode))
 
-(use-package auto-save
-  :straight (:type git :host github :repo "manateelazycat/auto-save")
-  :demand t
-  :config
-  (auto-save-enable)
-  (setq auto-save-silent t)   ; quietly save
-  (setq auto-save-delete-trailing-whitespace t))
+;; (use-package auto-save
+;;   :straight (:type git :host github :repo "manateelazycat/auto-save")
+;;   :demand t
+;;   :config
+;;   (auto-save-enable)
+;;   (setq auto-save-silent t)   ; quietly save
+;;   (setq auto-save-delete-trailing-whitespace t))
