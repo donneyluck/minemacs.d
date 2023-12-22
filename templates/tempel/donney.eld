@@ -165,9 +165,9 @@ c-mode :when (re-search-backward "^\\S-*$" (line-beginning-position) 'noerror)
 lua-mode
 
 (lv "local " (p "name") " = " (p "variable"))
-(for "for " (p "k, v") " in pairs(" (p "table") ") do" n> (p "body") n "end")
-(fori "for " (p "i, v") " in ipairs(" (p "table") ") do" n> (p "body") n "end")
-(fora "for i = 1, #" (p "array") " do" n> (p "body") n "end")
+(for "for " (p "k, v") " in pairs(" (p "table") ") do" n> (p "body") n> "end")
+(fori "for " (p "i, v") " in ipairs(" (p "table") ") do" n> (p "body") n> "end")
+(fora "for i = 1, #" (p "array") " do" n> (p "body") n> "end")
 (see "---@see " (p "function_desc") q)
 (param "---@param "(p "name") " " (p "type") " " (p "desc"))
 (ret   "---@return " (p "type"))
