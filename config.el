@@ -2,6 +2,13 @@
 
 ;; Copyright (C) 2022-2023 Abdelhak Bougouffa
 
+;; =============================================================================
+;; CAVEAT! PLEASE NOTE THAT THIS CONFIG FILE IS JUST AN EXAMPLE OF HOW TO SET
+;; SOME OF MINEMACS' FEATURES. IT IS NOT INTENDED TO BE USED AS IT IS UNLESS YOU
+;; UNDERSTAND IT ALL. IF YOU USE IT AS IT IS, YOU CAN SET SOME SETTINGS THAT YOU
+;; DON'T WANT TO SET!
+;; =============================================================================
+
 ;; Personal info
 (setq user-full-name "donneyluck"
       user-mail-address "donney.luck@gmail.com")
@@ -9,18 +16,18 @@
 ;; Set the default GPG key ID, see "gpg --list-secret-keys"
 ;; (setq-default epa-file-encrypt-to '("XXXX"))
 
-(setq
- ;; Set a theme for MinEmacs, supported themes include these from `doom-themes'
- ;; or built-in themes
- minemacs-theme 'doom-shades-of-purple) ; `doom-one' is a dark theme, `doom-one-light' is the light one
+;; Set a theme for MinEmacs, supported themes include these from `doom-themes'
+;; or built-in themes
+(setq minemacs-theme 'doom-monokai-classic) ; `doom-one' is a dark theme, `doom-one-light' is the light one
 
 ;; MinEmacs defines the variable `minemacs-fonts-plist' that is used by the
 ;; `+setup-fonts' function. The function checks and enables the first available
 ;; font from these defined in `minemacs-fonts-plist'. This variable can be
-;; customized to enable some language-specific fonts.
+;; customized to set font specs for specific Emacs faces or to enable some
+;; language-specific fonts.
 
 ;; You can set a list of fonts to be used, like the snippet below. The first
-;; font found in the list will be used:
+;; font found on the system will be used:
 (plist-put minemacs-fonts-plist
            :default
            '((:family "Courier New" :height 120 :weight bold)
@@ -28,17 +35,41 @@
              (:family "JetBrains Mono" :height 110)
              (:family "Cascadia Code" :height 130)))
 
-;; Use "Amiri" or "KacstOne" for Arabic script (the first to be found)
+;; To set font for arbitrary Emacs face, you need just to write the face name as
+;; a keyword. For example `variable-pitch' -> `:variable-pitch':
 (plist-put minemacs-fonts-plist
-           :arabic
+           :variable-pitch ;; <- applies to the `variable-pitch' face using `custom-theme-set-faces'
+           '("Lato"
+             "Roboto"
+             "Inter"
+             "Helvetica"))
+
+;; For example to set custom font for `mode-line' -> `:mode-line':
+(plist-put minemacs-fonts-plist
+           :mode-line ;; <- applies to the `mode-line' face using `custom-theme-set-faces'
+           '((:family "Lato" :weight regular)
+             (:family "Roboto" :weight light)))
+
+(plist-put minemacs-fonts-plist
+           :mode-line-inactive ;; <- applies to the `mode-line-inactive'
+           '((:family "Lato" :weight regular)
+             (:family "Roboto" :weight light)))
+
+;; You can also setup some language-specific fonts. For example, to use "Amiri"
+;; or "KacstOne" for Arabic script (the first to be found). All scripts
+;; supported by Emacs can be found in `+known-scripts'. The value of the extra
+;; `:prepend' is passed the last argument to `set-fontset-font'. The extra
+;; `:scale' parameter can be used to set a scaling factor for the font in Emacs'
+;; `face-font-rescale-alist'.
+(plist-put minemacs-fonts-plist
+           :arabic ;; <- applies to arabic script using `set-fontset-font'
            '((:family "Amiri" :scale 0.9)
              (:family "KacstOne")))
 
 ;; Use "LXGW WenKai Mono" for Han (Chinese) script
 (plist-put minemacs-fonts-plist
            :han
-           '((:family "LXGW WenKai Mono")))
-           ;; '((:family "LXGW WenKai Mono" :scale 1.3)))
+           '((:family "LXGW WenKai Mono" :scale 1.1)))
 
 ;; When `me-daemon' and `me-email' are enabled, MinEmacs will try to start
 ;; `mu4e' in background at startup. To disable this behavior, you can set
@@ -96,10 +127,10 @@
 ;;   (setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=Off"))
 
 ;; Module: `me-natural-langs' -- Package: `spell-fu'
-(with-eval-after-load 'spell-fu
-  ;; We can use MinEmacs' helper macro `+spell-fu-register-dictionaries!'
-  ;; to enable multi-language spell checking.
-  (+spell-fu-register-dictionaries! "en" "fr"))
+;; (with-eval-after-load 'spell-fu
+;;   ;; We can use MinEmacs' helper macro `+spell-fu-register-dictionaries!'
+;;   ;; to enable multi-language spell checking.
+;;   (+spell-fu-register-dictionaries! "en" "fr"))
 
 ;; Module: `me-rss' -- Package: `elfeed'
 (with-eval-after-load 'elfeed
